@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,16 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Navbar />
-          {children}
+          <ClerkLoading>
+            <div className="h-screen w-full flex items-center justify-center">
+              Loading....
+            </div>
+          </ClerkLoading>
+          <ClerkLoaded>
+            <NextTopLoader color="#AE0000" showSpinner={false} />
+            <Navbar />
+            {children}
+          </ClerkLoaded>
         </body>
       </html>
     </ClerkProvider>
